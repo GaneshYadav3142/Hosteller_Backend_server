@@ -1,13 +1,16 @@
 const express = require('express');
 const { ApolloServer, gql } = require('apollo-server-express');
 const mongoose = require('mongoose');
+const dotenv=require("dotenv")
 const cors=require("cors")
 const Destination = require('./models/destinationSchema');
 const Hostel = require('./models/hostelSchema');
 
 const app = express();
+require('dotenv').config();
 app.use(cors())
-mongoose.connect("mongodb+srv://Ganesh:Yadav@cluster0.z7f4ecg.mongodb.net/Hosteller?retryWrites=true&w=majority");
+console.log(process.env.MONGO_URL)
+mongoose.connect(process.env.MONGO_URL);
 
 
 
@@ -91,10 +94,10 @@ async function startApolloServer() {
   
     server.applyMiddleware({ app });
   
-    const PORT = process.env.PORT || 4000;
+    const PORT = process.env.PORT || 8080;
   
     app.listen(PORT, () => {
-      console.log(`Serer running at http://localhost:${PORT}${server.graphqlPath}`);
+      console.log(`Server running at http://localhost:${PORT}${server.graphqlPath}`);
     });
   }
   
